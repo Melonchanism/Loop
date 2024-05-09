@@ -9,73 +9,59 @@ import SwiftUI
 import Sparkle
 
 struct SettingsView: View {
-    @State var currentSettingsTab = SettingsTab.general
-    @StateObject private var updater = SoftwareUpdater()
-    private var appListManager = AppListManager()
-
-    var body: some View {
-        TabView(selection: $currentSettingsTab) {
-            GeneralSettingsView()
-                .tag(SettingsTab.general)
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("General")
-                }
-                .frame(width: 450)
-
-            RadialMenuSettingsView()
-                .tag(SettingsTab.radialMenu)
-                .tabItem {
-                    Image(.loop)
-                    Text("Radial Menu")
-                }
-                .frame(width: 450)
-
-            PreviewSettingsView()
-                .tag(SettingsTab.preview)
-                .tabItem {
-                    Image(systemName: "rectangle.portrait.and.arrow.right")
-                    Text("Preview")
-                }
-                .frame(width: 450)
-
-            KeybindingsSettingsView()
-                .tag(SettingsTab.keybindings)
-                .tabItem {
-                    Image(systemName: "keyboard")
-                    Text("Keybindings")
-                }
-                .frame(width: 500)
-                .frame(minHeight: 500, maxHeight: 680)
-
-            ExcludeListSettingsView()
-                .tag(SettingsTab.excludedApps)
-                .tabItem {
-                    Image(systemName: "xmark.app")
-                    Text("Excluded Apps")
-                }
-                .environmentObject(appListManager)
-                .frame(width: 450)
-                .frame(maxHeight: 680)
-
-            MoreSettingsView()
-                .tag(SettingsTab.more)
-                .tabItem {
-                    Image(systemName: "ellipsis.circle")
-                    Text("More")
-                }
-                .environmentObject(updater)
-                .frame(width: 450)
+  @State var selectedTab = 0
+  @StateObject private var updater = SoftwareUpdater()
+  private var appListManager = AppListManager()
+  
+  var body: some View {
+    TabView(selection: $selectedTab) {
+      GeneralSettingsView()
+        .tabItem {
+          Label("General", systemImage: "gearshape")
         }
-        .fixedSize(horizontal: true, vertical: true)
+        .tag(0)
+        .frame(width: 450)
+      
+      RadialMenuSettingsView()
+        .tabItem {
+          Label("Radial Menu", image: "loop")
+        }
+        .tag(1)
+        .frame(width: 450)
+      
+      PreviewSettingsView()
+        .tabItem {
+          Label("Preview", systemImage: "rectangle.dashed")
+        }
+        .tag(2)
+        .frame(width: 450)
+      
+      KeybindingsSettingsView()
+        .tabItem {
+          Label("Key Bindings", systemImage: "keyboard")
+        }
+        .tag(3)
+        .frame(width: 450)
+        .frame(minHeight: 500, maxHeight: 680)
+      
+      ExcludeListSettingsView()
+        .tabItem {
+          Label("Excluded Apps", systemImage: "xmark.app")
+        }
+        .tag(4)
+        .environmentObject(appListManager)
+        .frame(width: 450)
+        .frame(maxHeight: 680)
+      
+      MoreSettingsView()
+        .tabItem {
+          Text("More")
+          Label("More", systemImage: "ellipsis.circle")
+        }
+        .tag(5)
+        .environmentObject(updater)
+        .frame(width: 450)
     }
-
-    enum SettingsTab: Int {
-        case general
-        case radialMenu
-        case preview
-        case keybindings
-        case excludedApps
-        case more
-    }
+    .fixedSize(horizontal: true, vertical: true)
+  }
 }

@@ -1250,7 +1250,11 @@
         }
       }
     },
+    "Key Bindings" : {
+
+    },
     "Keybindings" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
